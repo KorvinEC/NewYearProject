@@ -4,6 +4,7 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 import { useState } from 'react';
 import { CardProps } from '@components/NominationCard/NominationCard';
+import { useTemplate } from '@enteties/Template/model';
 
 const DescriptionField = styled(TextField)`
     background-color: "#ffcda2",
@@ -42,11 +43,23 @@ const CardTitle = styled(Typography)`
 `;
 
 export const TemplateCard = ({
-    title, description, url, subtitle,
+    title, description, url, subtitle, index,
 }: CardProps) => {
     const [files, setFiles] = useState<File[]>([]);
 
     const urls = files.map((file) => URL.createObjectURL(file));
+
+    const descriptionOnChange = (e) => {
+        useTemplate.setState((state) => {
+            const newNomination = state.nominations;
+            newNomination[index].description = e.target.value;
+            return ({
+                nominations: newNomination,
+                suggestions: state.suggestions,
+            });
+        });
+    };
+
     return (
         <CardContainer>
             <CardTitle>{title}</CardTitle>
@@ -70,9 +83,11 @@ export const TemplateCard = ({
                 defaultValue={description}
                 multiline
                 id="outlined-basic"
+                name="description"
                 placeholder=""
                 label="Описание"
                 variant="outlined"
+                onChange={descriptionOnChange}
             />
         </CardContainer>
     );

@@ -6,6 +6,9 @@ import styled from '@emotion/styled';
 import React, { useState } from 'react';
 import { useUserStore } from '@enteties/User/model';
 import { SuggestionList } from '@components/SuggestionList/SuggestionList';
+import { UserCardList } from '@components/UserCardList/UserCardList';
+import { useTemplate } from '@enteties/Template/model';
+import { saveCard } from '@actions/saveCard';
 import Header from '../../components/Header/Header';
 import { NominationCardList } from '../../components/NominationCardList/NominationCardList';
 
@@ -40,12 +43,23 @@ function HomePage() {
         setSuccessAlert(false);
     };
 
+    const savehandler = () => {
+        if (editRegime) {
+            const { nominations, templateID } = useTemplate.getState();
+            const card_data = nominations.map((nomination) => ({ description: nomination.description }));
+            saveCard({
+                card_template_id: templateID,
+                card_data,
+            }).then((res) => setEditRegime(false));
+        }
+    };
+
     return (
         <PageContainer>
             <Header />
             <ActionButtonContainer>
                 <Button variant="contained" onClick={() => setEditRegime(true)}>Редактировать</Button>
-                <Button variant="contained" onClick={() => setEditRegime(false)}>Сохранить</Button>
+                <Button type="submit" variant="contained" onClick={savehandler}>Сохранить</Button>
                 <Button variant="contained" onClick={shareHandler}>Поделиться</Button>
             </ActionButtonContainer>
             <NominationCardList isEdit={editRegime} />
