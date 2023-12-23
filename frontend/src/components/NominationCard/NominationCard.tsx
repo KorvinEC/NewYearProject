@@ -14,6 +14,7 @@ export interface CardProps {
     description: string
     url: string
     subtitle: string
+    index: number
 }
 
 const CardImage = styled.img`
@@ -22,14 +23,15 @@ const CardImage = styled.img`
 
 export const NominationCard = (props: CardProps) => {
     const {
-        title, description, url, subtitle,
+        title, description, url, subtitle, index,
     } = props;
 
     const [expand, setExpand] = useState(false);
     const [openBackdrop, setOpenBackdrop] = useState(false);
+
     return (
         <>
-            <Card sx={{ maxWidth: 350, minWidth: 350, minHeight: 550 }}>
+            <Card key={index} sx={{ maxWidth: 350, minWidth: 350, minHeight: 550 }}>
                 <CardActionArea>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', padding: '0 10px' }}>
                         <Typography gutterBottom variant="h5" component="div">

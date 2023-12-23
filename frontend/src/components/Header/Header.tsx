@@ -44,6 +44,7 @@ function ResponsiveAppBar() {
         }
         if (setting === 'Logout') {
             const destroy = useUserStore.getState().destroyUser;
+            useUserStore.setState((state) => ({ ...state, access_token: null }));
             destroy();
             console.log(useUserStore.getState());
         }

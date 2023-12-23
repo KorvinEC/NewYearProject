@@ -16,12 +16,12 @@ interface authInfo {
   password: string | null
 }
 
-export const AuthorizationForm = () => {
+export const SignupForm = () => {
     const navigate = useNavigate();
     const [error, setError] = useState(false);
     async function loginAction(authInfo: authInfo) {
-        AxiosApi.post<authInfo, {data:UserSchema}>('/authentication/token', authInfo).then((res) => {
-            navigate('/');
+        AxiosApi.post<authInfo, {data:UserSchema}>('/authentication/signup', authInfo).then((res) => {
+            navigate('/login');
             useUserStore.setState({ access_token: res.data.access_token, isAuth: true });
         })
             .catch((e) => {

@@ -23,15 +23,16 @@ export const NominationCardList = ({ isEdit }: NominationCardListProps) => {
                 direction="row"
                 spacing={3}
             >
-                {data?.data?.nominations?.map((nomination) => (
+                {data.data?.[1]?.data.map((nomination, index) => (
                     isEdit
                         ? (
                             <Grid item spacing={2}>
                                 <TemplateCard
+                                    index={index}
                                     key={nomination.id}
                                     title={nomination.title}
                                     description={nomination.description}
-                                    url={nomination.img}
+                                    url={nomination.imgage ?? ''}
                                     subtitle={nomination.subtitle}
                                 />
                             </Grid>
@@ -42,7 +43,7 @@ export const NominationCardList = ({ isEdit }: NominationCardListProps) => {
                                     key={nomination.id}
                                     title={nomination.title}
                                     description={nomination.description}
-                                    url={nomination.img}
+                                    url={nomination.imgage ?? ''}
                                     subtitle={nomination.subtitle}
                                 />
                             </Grid>
