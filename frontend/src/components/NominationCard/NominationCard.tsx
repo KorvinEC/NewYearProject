@@ -5,11 +5,13 @@ import Typography from '@mui/material/Typography';
 import {
     Backdrop, Box, CardActionArea, Collapse, IconButton,
 } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ArrowDropDown } from '@mui/icons-material';
 import styled from '@emotion/styled';
+import AxiosApi from '@actions/axiosApi';
 
 export interface CardProps {
+    id: number
     title: string
     description: string
     url: string
@@ -29,6 +31,17 @@ export const NominationCard = (props: CardProps) => {
     const [expand, setExpand] = useState(false);
     const [openBackdrop, setOpenBackdrop] = useState(false);
 
+    const ref = useRef(false);
+    useEffect(() => {
+        if (url) {
+            AxiosApi.get(url, {
+                responseType: 'blob',
+            }).then((res) => {
+                ref.current = URL.createObjectURL(res.data);
+            });
+        }
+    });
+
     return (
         <>
             <Card key={index} sx={{ maxWidth: 350, minWidth: 350, minHeight: 550 }}>
@@ -41,13 +54,15 @@ export const NominationCard = (props: CardProps) => {
                             <ArrowDropDown />
                         </IconButton>
                     </Box>
-                    <CardMedia
-                        onClick={() => setOpenBackdrop(true)}
-                        component="img"
-                        height="350px"
-                        image={url}
-                        alt="green iguana"
-                    />
+                    {ref.current && (
+                        <CardMedia
+                            onClick={() => setOpenBackdrop(true)}
+                            component="img"
+                            height="350px"
+                            image={ref.current ?? ''}
+                            alt="green iguana"
+                        />
+                    )}
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
                             {subtitle}

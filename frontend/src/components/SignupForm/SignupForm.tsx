@@ -74,8 +74,8 @@ export const SignupForm = () => {
             <Grid container>
 
                 <Grid item>
-                    <Link href="/signup" variant="body2">
-                        Регистрация
+                    <Link href="/login" variant="body2">
+                        Войти
                     </Link>
                 </Grid>
             </Grid>

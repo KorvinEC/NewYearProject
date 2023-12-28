@@ -5,6 +5,8 @@ import AddIcon from '@mui/icons-material/Add';
 import { useState } from 'react';
 import { CardProps } from '@components/NominationCard/NominationCard';
 import { useTemplate } from '@enteties/Template/model';
+import SaveIcon from '@mui/icons-material/Save';
+import { savePhoto } from '@actions/savePhoto';
 
 const DescriptionField = styled(TextField)`
     background-color: "#ffcda2",
@@ -43,7 +45,7 @@ const CardTitle = styled(Typography)`
 `;
 
 export const TemplateCard = ({
-    title, description, url, subtitle, index,
+    title, description, url, subtitle, index, id,
 }: CardProps) => {
     const [files, setFiles] = useState<File[]>([]);
 
@@ -60,11 +62,16 @@ export const TemplateCard = ({
         });
     };
 
+    const savePhotoHandler = () => {
+        console.log(files);
+        savePhoto(id, files[0]).then((res) => console.log(res));
+    };
+
     return (
         <CardContainer>
             <CardTitle>{title}</CardTitle>
             <TextField variant="standard" label="Ваше название" defaultValue={subtitle} />
-            <img src={urls?.[0] ?? url} width="100%" height="350px" alt="card" />
+            {Boolean(urls?.[0] ?? url) && <img src={urls?.[0] ?? url} width="100%" height="350px" alt="card" />}
             <Button component="label" variant="contained" startIcon={<AddIcon />}>
                 Загрузить файл
                 <VisuallyHiddenInput
@@ -78,6 +85,9 @@ export const TemplateCard = ({
                         }
                     }}
                 />
+            </Button>
+            <Button component="label" variant="contained" startIcon={<SaveIcon />} onClick={savePhotoHandler}>
+                Сохранить фото
             </Button>
             <DescriptionField
                 defaultValue={description}
