@@ -13,6 +13,7 @@ function App() {
     const isAuth = useUserStore((state) => state.isAuth);
 
     useEffect(() => {}, [isAuth]);
+
     return (
         <div>
             {

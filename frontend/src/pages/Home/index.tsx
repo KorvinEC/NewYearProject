@@ -58,7 +58,7 @@ function HomePage() {
         <PageContainer>
             <Header />
             <ActionButtonContainer>
-                <Button variant="contained" onClick={() => setEditRegime(true)}>Редактировать</Button>
+                <Button variant="contained" onClick={() => setEditRegime(!editRegime)}>Редактировать</Button>
                 <Button type="submit" variant="contained" onClick={savehandler}>Сохранить</Button>
                 <Button variant="contained" onClick={shareHandler}>Поделиться</Button>
             </ActionButtonContainer>

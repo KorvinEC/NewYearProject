@@ -18,21 +18,24 @@ export const NominationCardList = ({ isEdit }: NominationCardListProps) => {
 
     return (
         <Box margin="16px 28px">
+            <h1>lol i am here</h1>
+
             <Grid
                 container
                 direction="row"
                 spacing={3}
             >
-                {data.data?.[1]?.data.map((nomination, index) => (
+                {data.data?.[5]?.data.map((nomination, index) => (
                     isEdit
                         ? (
                             <Grid item spacing={2}>
                                 <TemplateCard
                                     index={index}
                                     key={nomination.id}
+                                    id={nomination.id}
                                     title={nomination.title}
                                     description={nomination.description}
-                                    url={nomination.imgage ?? ''}
+                                    url={nomination.image_url ?? ''}
                                     subtitle={nomination.subtitle}
                                 />
                             </Grid>
@@ -40,10 +43,12 @@ export const NominationCardList = ({ isEdit }: NominationCardListProps) => {
                         : (
                             <Grid item spacing={2}>
                                 <NominationCard
+                                    index={index}
+                                    id={nomination.id}
                                     key={nomination.id}
                                     title={nomination.title}
                                     description={nomination.description}
-                                    url={nomination.imgage ?? ''}
+                                    url={nomination.image_url ?? ''}
                                     subtitle={nomination.subtitle}
                                 />
                             </Grid>
